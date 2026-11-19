@@ -1,0 +1,15 @@
+# Виртуальные окружения
+.venv/
+venv/
+
+# Кэш Python
+__pycache__/
+*.pyc
+
+# Кэш MNIST (~15 МБ, скачивается автоматически при запуске lab4_solution.py)
+lab4/data/
+
+# Служебное
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

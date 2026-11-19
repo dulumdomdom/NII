@@ -1,0 +1,162 @@
+======================================================================
+ЛАБОРАТОРНАЯ РАБОТА №4. ВВЕДЕНИЕ В НЕЙРОННЫЕ СЕТИ (MNIST)
+TensorFlow 2.19.0, seeds=(42, 7, 2024), epochs=10
+======================================================================
+
+[neuron] Один нейрон, веса заданы вручную:
+  Имя  Вес  Рост  r (сумма)  sigmoid(r) Прогноз Истина
+ Иван   84   180        4.2       0.985    male   male
+Мария   57   165       -5.4       0.004  female female
+ Анна   62   170       -3.4       0.032  female female
+[data] Загружаю MNIST (первый раз скачивается ~15 МБ)...
+[data] X: (70000, 784), y: (70000,), пиксели 0..255
+
+[base] train (52500, 784), test (17500, 784)
+[base]  sgd: test_acc=0.9069 test_loss=0.3265 (42.1 c)
+[base] adam: test_acc=0.9602 test_loss=0.1315 (44.7 c)
+        Model: "sequential_1"
+┌─────────────────────────────────┬────────────────────────┬───────────────┐
+│ Layer (type)                    │ Output Shape           │       Param # │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_3 (Dense)                 │ (None, 64)             │        50,240 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_4 (Dense)                 │ (None, 64)             │         4,160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_5 (Dense)                 │ (None, 10)             │           650 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 165,152 (645.13 KB)
+ Trainable params: 55,050 (215.04 KB)
+ Non-trainable params: 0 (0.00 B)
+ Optimizer params: 110,102 (430.09 KB)
+
+[base] прогноз  : [8 4 6 1 4 1 0 2 4 7]
+[base] истина   : [8 4 6 1 4 1 0 2 4 7]
+
+======================================================================
+ЗАДАНИЕ 1. Число скрытых слоёв 1..5 (64 нейронов, sigmoid, 10 эпох)
+======================================================================
+  seed=42    adam  layers=1  test_acc=0.9621  train_acc=0.9793  (44.3 c)
+  seed=42    adam  layers=2  test_acc=0.9602  train_acc=0.9782  (43.3 c)
+  seed=42    adam  layers=3  test_acc=0.9609  train_acc=0.9765  (46.0 c)
+  seed=42    adam  layers=4  test_acc=0.9563  train_acc=0.9698  (45.5 c)
+  seed=42    adam  layers=5  test_acc=0.9423  train_acc=0.9614  (47.1 c)
+  seed=42    sgd   layers=1  test_acc=0.9190  train_acc=0.9230  (35.1 c)
+  seed=42    sgd   layers=2  test_acc=0.9069  train_acc=0.9098  (40.6 c)
+  seed=42    sgd   layers=3  test_acc=0.8590  train_acc=0.8484  (39.3 c)
+  seed=42    sgd   layers=4  test_acc=0.3342  train_acc=0.3194  (45.6 c)
+  seed=42    sgd   layers=5  test_acc=0.1042  train_acc=0.1102  (43.3 c)
+  seed=7     adam  layers=1  test_acc=0.9578  train_acc=0.9779  (41.4 c)
+  seed=7     adam  layers=2  test_acc=0.9585  train_acc=0.9803  (39.2 c)
+  seed=7     adam  layers=3  test_acc=0.9568  train_acc=0.9779  (41.4 c)
+  seed=7     adam  layers=4  test_acc=0.9577  train_acc=0.9738  (44.2 c)
+  seed=7     adam  layers=5  test_acc=0.9516  train_acc=0.9640  (56.7 c)
+  seed=7     sgd   layers=1  test_acc=0.9156  train_acc=0.9224  (42.8 c)
+  seed=7     sgd   layers=2  test_acc=0.9091  train_acc=0.9112  (28.3 c)
+  seed=7     sgd   layers=3  test_acc=0.8583  train_acc=0.8540  (29.6 c)
+  seed=7     sgd   layers=4  test_acc=0.2897  train_acc=0.2585  (32.3 c)
+  seed=7     sgd   layers=5  test_acc=0.1125  train_acc=0.1125  (30.7 c)
+  seed=2024  adam  layers=1  test_acc=0.9568  train_acc=0.9767  (33.5 c)
+  seed=2024  adam  layers=2  test_acc=0.9627  train_acc=0.9809  (35.0 c)
+  seed=2024  adam  layers=3  test_acc=0.9542  train_acc=0.9761  (39.4 c)
+  seed=2024  adam  layers=4  test_acc=0.9569  train_acc=0.9715  (45.3 c)
+  seed=2024  adam  layers=5  test_acc=0.9418  train_acc=0.9684  (38.3 c)
+  seed=2024  sgd   layers=1  test_acc=0.9243  train_acc=0.9218  (27.5 c)
+  seed=2024  sgd   layers=2  test_acc=0.9123  train_acc=0.9084  (28.3 c)
+  seed=2024  sgd   layers=3  test_acc=0.8571  train_acc=0.8462  (30.8 c)
+  seed=2024  sgd   layers=4  test_acc=0.3714  train_acc=0.2958  (36.6 c)
+  seed=2024  sgd   layers=5  test_acc=0.1917  train_acc=0.1117  (34.7 c)
+optimizer  hidden_layers  test_acc_mean  test_acc_std  train_acc_mean  test_loss_mean  fit_seconds_mean  params
+     adam              1         0.9589        0.0028          0.9780          0.1359           39.7333   50890
+     adam              2         0.9605        0.0022          0.9798          0.1337           39.1667   55050
+     adam              3         0.9573        0.0034          0.9768          0.1459           42.2667   59210
+     adam              4         0.9570        0.0007          0.9717          0.1563           45.0000   63370
+     adam              5         0.9452        0.0055          0.9646          0.1941           47.3667   67530
+      sgd              1         0.9196        0.0044          0.9224          0.2797           35.1333   50890
+      sgd              2         0.9094        0.0027          0.9098          0.3269           32.4000   55050
+      sgd              3         0.8581        0.0010          0.8495          0.5444           33.2333   59210
+      sgd              4         0.3318        0.0409          0.2912          1.9217           38.1667   63370
+      sgd              5         0.1361        0.0483          0.1114          2.3019           36.2333   67530
+
+======================================================================
+ЗАДАНИЕ 2. Доля тестовой выборки 5%..50%
+======================================================================
+  seed=42    test=5%  n_train=66500  n_test= 3500  test_acc=0.9683  train_acc=0.9789
+  seed=42    test=10%  n_train=63000  n_test= 7000  test_acc=0.9611  train_acc=0.9798
+  seed=42    test=15%  n_train=59500  n_test=10500  test_acc=0.9590  train_acc=0.9783
+  seed=42    test=20%  n_train=56000  n_test=14000  test_acc=0.9560  train_acc=0.9798
+  seed=42    test=25%  n_train=52500  n_test=17500  test_acc=0.9602  train_acc=0.9782
+  seed=42    test=30%  n_train=49000  n_test=21000  test_acc=0.9600  train_acc=0.9789
+  seed=42    test=35%  n_train=45500  n_test=24500  test_acc=0.9542  train_acc=0.9767
+  seed=42    test=40%  n_train=42000  n_test=28000  test_acc=0.9499  train_acc=0.9794
+  seed=42    test=45%  n_train=38500  n_test=31500  test_acc=0.9565  train_acc=0.9786
+  seed=42    test=50%  n_train=35000  n_test=35000  test_acc=0.9531  train_acc=0.9787
+  seed=7     test=5%  n_train=66500  n_test= 3500  test_acc=0.9649  train_acc=0.9796
+  seed=7     test=10%  n_train=63000  n_test= 7000  test_acc=0.9669  train_acc=0.9790
+  seed=7     test=15%  n_train=59500  n_test=10500  test_acc=0.9666  train_acc=0.9798
+  seed=7     test=20%  n_train=56000  n_test=14000  test_acc=0.9567  train_acc=0.9793
+  seed=7     test=25%  n_train=52500  n_test=17500  test_acc=0.9585  train_acc=0.9803
+  seed=7     test=30%  n_train=49000  n_test=21000  test_acc=0.9574  train_acc=0.9801
+  seed=7     test=35%  n_train=45500  n_test=24500  test_acc=0.9559  train_acc=0.9801
+  seed=7     test=40%  n_train=42000  n_test=28000  test_acc=0.9590  train_acc=0.9797
+  seed=7     test=45%  n_train=38500  n_test=31500  test_acc=0.9543  train_acc=0.9782
+  seed=7     test=50%  n_train=35000  n_test=35000  test_acc=0.9581  train_acc=0.9810
+  seed=2024  test=5%  n_train=66500  n_test= 3500  test_acc=0.9700  train_acc=0.9802
+  seed=2024  test=10%  n_train=63000  n_test= 7000  test_acc=0.9681  train_acc=0.9803
+  seed=2024  test=15%  n_train=59500  n_test=10500  test_acc=0.9621  train_acc=0.9799
+  seed=2024  test=20%  n_train=56000  n_test=14000  test_acc=0.9681  train_acc=0.9805
+  seed=2024  test=25%  n_train=52500  n_test=17500  test_acc=0.9627  train_acc=0.9809
+  seed=2024  test=30%  n_train=49000  n_test=21000  test_acc=0.9602  train_acc=0.9785
+  seed=2024  test=35%  n_train=45500  n_test=24500  test_acc=0.9596  train_acc=0.9802
+  seed=2024  test=40%  n_train=42000  n_test=28000  test_acc=0.9589  train_acc=0.9798
+  seed=2024  test=45%  n_train=38500  n_test=31500  test_acc=0.9607  train_acc=0.9815
+  seed=2024  test=50%  n_train=35000  n_test=35000  test_acc=0.9573  train_acc=0.9791
+ test_size  n_train  n_test  test_acc_mean  test_acc_std  train_acc_mean  test_loss_mean  fit_seconds_mean  params
+      0.05    66500    3500         0.9677        0.0026          0.9795          0.1097           43.2667   55050
+      0.10    63000    7000         0.9654        0.0037          0.9797          0.1163           41.7000   55050
+      0.15    59500   10500         0.9626        0.0038          0.9794          0.1229           40.1667   55050
+      0.20    56000   14000         0.9603        0.0068          0.9798          0.1321           35.6333   55050
+      0.25    52500   17500         0.9605        0.0022          0.9798          0.1337           35.7333   55050
+      0.30    49000   21000         0.9592        0.0016          0.9792          0.1357           37.2667   55050
+      0.35    45500   24500         0.9566        0.0028          0.9790          0.1474           30.0000   55050
+      0.40    42000   28000         0.9559        0.0052          0.9796          0.1464           27.8000   55050
+      0.45    38500   31500         0.9572        0.0033          0.9794          0.1456           25.0333   55050
+      0.50    35000   35000         0.9562        0.0027          0.9796          0.1488           23.3667   55050
+
+======================================================================
+ЗАДАНИЕ 3. Оптимизаторы
+======================================================================
+  seed=42    sgd           test_acc=0.9069  test_loss=0.3265  (38.5 c)
+  seed=42    sgd_momentum  test_acc=0.9627  test_loss=0.1230  (39.4 c)
+  seed=42    adagrad       test_acc=0.7373  test_loss=1.3314  (40.8 c)
+  seed=42    adadelta      test_acc=0.4502  test_loss=2.1582  (48.0 c)
+  seed=42    rmsprop       test_acc=0.9642  test_loss=0.1279  (42.9 c)
+  seed=42    adam          test_acc=0.9602  test_loss=0.1315  (43.5 c)
+  seed=42    nadam         test_acc=0.9618  test_loss=0.1294  (44.6 c)
+  seed=42    adamax        test_acc=0.9583  test_loss=0.1398  (44.1 c)
+  seed=7     sgd           test_acc=0.9091  test_loss=0.3319  (37.7 c)
+  seed=7     sgd_momentum  test_acc=0.9621  test_loss=0.1275  (41.7 c)
+  seed=7     adagrad       test_acc=0.7421  test_loss=1.2754  (41.3 c)
+  seed=7     adadelta      test_acc=0.4489  test_loss=2.1428  (50.4 c)
+  seed=7     rmsprop       test_acc=0.9598  test_loss=0.1436  (46.0 c)
+  seed=7     adam          test_acc=0.9585  test_loss=0.1460  (44.8 c)
+  seed=7     nadam         test_acc=0.9580  test_loss=0.1410  (45.7 c)
+  seed=7     adamax        test_acc=0.9578  test_loss=0.1396  (44.3 c)
+  seed=2024  sgd           test_acc=0.9123  test_loss=0.3225  (38.2 c)
+  seed=2024  sgd_momentum  test_acc=0.9627  test_loss=0.1275  (41.1 c)
+  seed=2024  adagrad       test_acc=0.7859  test_loss=1.2878  (41.3 c)
+  seed=2024  adadelta      test_acc=0.3298  test_loss=2.1330  (48.0 c)
+  seed=2024  rmsprop       test_acc=0.9650  test_loss=0.1195  (46.1 c)
+  seed=2024  adam          test_acc=0.9627  test_loss=0.1237  (44.1 c)
+  seed=2024  nadam         test_acc=0.9624  test_loss=0.1214  (45.4 c)
+  seed=2024  adamax        test_acc=0.9600  test_loss=0.1325  (43.8 c)
+   optimizer  test_acc_mean  test_acc_std  train_acc_mean  test_loss_mean  fit_seconds_mean  params
+     rmsprop         0.9630        0.0028          0.9813          0.1303           45.0000   55050
+sgd_momentum         0.9625        0.0004          0.9746          0.1260           40.7333   55050
+       nadam         0.9607        0.0024          0.9817          0.1306           45.2333   55050
+        adam         0.9605        0.0022          0.9798          0.1337           44.1333   55050
+      adamax         0.9587        0.0012          0.9682          0.1373           44.0667   55050
+         sgd         0.9094        0.0027          0.9098          0.3269           38.1333   55050
+     adagrad         0.7551        0.0268          0.7457          1.2982           41.1333   55050
+    adadelta         0.4097        0.0691          0.3947          2.1447           48.8000   55050
+
+ГОТОВО за 58.4 мин. Результаты: C:\Users\dulum\Desktop\РТФ\ИИ\lab3-4\lab4\results
